@@ -11,11 +11,11 @@ Para verificar sua configuração para melhorias de desempenho recomendados, exe
 python -c "import fastai.utils; fastai.utils.check_perf()"
 ```
 
-## Training Precision Mixed
+## Treinamento com precisão mixa
 
-Combinada FP16 formação / FP32 tremendamente pode melhorar a velocidade de formação e usar menos memória RAM GPU. Para a teoria por trás dele ver este [thread](https://forums.fast.ai/t/mixed-precision-training/20720/3)
+A combinação de variáveis floats de 16 e 32 bits pode tremendamente pode melhorar a velocidade de treinamento e usar menos memória RAM e GPU. Para a teoria por trás, confira este [fórum](https://forums.fast.ai/t/mixed-precision-training/20720/3)
 
-Para implantá-lo ver [these instructions](/callbacks.fp16.html).
+Para implementação, confira [estas instruções](/callbacks.fp16.html).
 
 
 
