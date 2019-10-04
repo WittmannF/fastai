@@ -2,7 +2,7 @@
 Título: Tutoriais Overview
 ---
 
-## tutoriais disponíveis atualmente
+## Tutoriais disponíveis atualmente
 
 * [Look at data](/tutorial.data.html) - Este é um tutorial iniciante, que explica como rapidamente olhar para seus dados ou previsões do modelo.
 
