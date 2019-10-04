@@ -14,7 +14,7 @@ preencherá o espaço de nome atual com esses módulos externos, além de funç�
 
 Nota: como este documento foi criado manualmente, ele pode estar desatualizado quando você o ler. Para obter a lista atualizada de importações, use:
 
-python \- c ' a = set (\[\* vars (). keys (), "a"\]); do fastai.basics import \*; print (\* classificado (set (vars (). keys ()) - a), sep = " \\ n ") '
+    python \- c ' a = set (\[\* vars (). keys (), "a"\]); do fastai.basics import \*; print (\* classificado (set (vars (). keys ()) - a), sep = " \\ n ") '
 
 _Os nomes em negrito são módulos. Se um objeto tiver um alias durante sua importação, o nome original será listado entre parênteses._
 
