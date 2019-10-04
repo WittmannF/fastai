@@ -1,91 +1,91 @@
 ---
-title: Support
+Título: Suporte
 ---
 
-## Overview
+## Visão global
 
-fastai support is provided via [github issue tracker](https://github.com/fastai/fastai/issues) and the [forums](https://forums.fast.ai/).
+apoio fastai é fornecida através [github issue tracker](https://github.com/fastai/fastai/issues) eo [forums](https://forums.fast.ai/).
 
-Most issues, in particular problems with your code, should be discussed at the [forums](https://forums.fast.ai/). Either find an existing thread that's already discussing similar issues, or start a new thread.
+A maioria dos problemas, em particular os problemas com seu código, deve ser discutido na [forums](https://forums.fast.ai/). Quer encontrar um fio existente que já está discutindo problemas semelhantes, ou iniciar um novo tópico.
 
-If you are pretty sure you found a bug in the `fastai` software please submit a bug report using [github issue tracker](https://github.com/fastai/fastai/issues).
+Se você é certeza que você encontrou um bug no software `fastai` envie um relatório de bug usando [github issue tracker](https://github.com/fastai/fastai/issues).
 
-Feature requests are best discussed on the [forums](https://forums.fast.ai/).
+solicitações de recursos são melhor discutidas na [forums](https://forums.fast.ai/).
 
-It's always a good idea to search the forums to see whether someone else has already reported a similar issue. Usually, it will help you find a solution much faster.
+É sempre uma boa idéia para pesquisar no fórum para ver se alguém já relatou um problema semelhante. Normalmente, ele irá ajudá-lo a encontrar uma solução muito mais rápida.
 
-If the problem is not strictly related to the `fastai` codebase, but to modules it depends on (e.g., `pytorch`, `torchvision`, `spacy`, `numpy`), often you can find solutions by searching for the error messages from the error stack trace on google or your favourite search engine.
+Se o problema não está estritamente relacionada com o `base de código fastai`, mas para os módulos que ele depende (por exemplo,` pytorch`, `torchvision`,` spacy`, `numpy`), muitas vezes você pode encontrar soluções, procurando o erro mensagens a partir do rastreamento de pilha de erro no Google ou o seu motor de busca favorito.
 
 
 
-## Reporting Issues
+## problemas de relatórios
 
-Before making a new issue report, please:
+Antes de fazer um novo relatório de assunto, por favor:
 
-1.  Make sure you have the latest `conda` and/or `pip`, depending on the package manager you use:
-    ```
-    pip install pip -U
-    conda install conda
-    ```
-    and then repeat the steps and see whether the problem you wanted to report still exists.
+1. Certifique-se de que você tem a última `conda` e / ou` pip`, dependendo do gerenciador de pacotes que você usa:
+    `` `
+    pip instalar pip -U
+    Conda instalar Conda
+    `` `
+    e, em seguida, repita os passos e ver se o problema que você queria relatório ainda existe.
 
-2.  Make sure [your platform is supported by `pytorch-1x`](https://github.com/fastai/fastai/blob/master/README.md#is-my-system-supported). You may have to build `pytorch` from source if it isn't.
+2. Certifique-se [your platform is supported by `pytorch-1x`](https://github.com/fastai/fastai/blob/master/README.md#is-my-system-supported). Você pode ter que construir `pytorch` de origem se ele não é.
 
-3. Make sure you follow [the exact installation instructions](https://github.com/fastai/fastai/blob/master/README.md#installation). If you improvise and it works that's great, if it fails please RTFM ;)
+3. Certifique-se que você siga [the exact installation instructions](https://github.com/fastai/fastai/blob/master/README.md#installation). Se você improvisa e funciona isso é ótimo, se não agradar RTFM;)
 
-4. Check the [Troubleshooting](/troubleshoot.html) document.
+4. Verifique o documento [Troubleshooting](/troubleshoot.html).
 
-5. Search [forums](https://forums.fast.ai/) for a similar issues already reported.
+5. Pesquisa [forums](https://forums.fast.ai/) por problemas semelhantes já notificados.
 
-If you still can't find a resolution, please post your issue in:
+Se você ainda não conseguiu encontrar uma resolução, por favor poste o seu problema em:
 
-* If it's an installation issue in
+* Se é um problema de instalação em
 [this thread](https://forums.fast.ai/t/fastai-v1-install-issues-thread/24111/1).
-* For all other issue either find an existing relevant thread, or create a new one.
+* Para todos os outros questão quer encontrar um segmento relevante existente ou criar uma nova.
 
-When you make a post, make sure to include in your post:
+Quando você faz um post, certifique-se de incluir em sua mensagem:
 
-1. a brief summary of the problem
-2. a full stack backtrace if you get an error or exception (not just the error).
-3. how it can be reproduced
-4. the output of the following script (including the \`\`\`text opening and closing \`\`\` so that it's formatted properly in your post):
-   ```
-   git clone https://github.com/fastai/fastai
-   cd fastai
-   python -c 'import fastai.utils; fastai.utils.show_install(1)'
-   ```
+1. um breve resumo do problema
+2. a backtrace pilha completa, se você receber um erro ou exceção (e não apenas o erro).
+3. Como pode ser reproduzido
+4. a saída do script a seguir (incluindo o \ '\' \ `abertura texto e fechamento \ '\' \ 'para que seja formatado corretamente em seu post):
+   `` `
+   git clone https://github.com/fastai/fastai
+   cd fastai
+   python -c 'fastai.utils de importação; fastai.utils.show_install (1)'
+   `` `
 
-   The reporting script won't work if `pytorch` wasn't installed, so if that's the case, then send in the following details:
-   * output of `python --version`
-   * your OS: linux/osx/windows / and linux distro+version if relevant
-   * output of `nvidia-smi`  (or say CPU if none)
+   O script de relatórios não funcionará se `pytorch` não foi instalado, por isso, se esse é o caso, em seguida, enviar os seguintes detalhes:
+   * Saída do `pitão --version`
+   * O seu sistema operacional: Linux / OSX / windows / e linux distro + versão se relevante
+   * Saída de `nvidia-smi` (ou dizer CPU se não houver)
 
-5. Only if it's an installation issue, the exact installation steps you followed. No need to list the installed packages, that's usually is too noisy, since it may contain hundreds of dependencies in it. Just your conda/pip install commands you did.
+5. Só se é um problema de instalação, a instalação exata etapas seguidas. Não há necessidade de listar os pacotes instalados, que geralmente é muito barulhento, uma vez que podem conter centenas de dependências nele. Apenas o seu Conda / PIP instalar comandos que você fez.
 
-If the resulting output is super long, please paste it to https://pastebin.com/ and include a link to your paste, but only if it's hundreds and hundreds of lines of output - otherwise posting all the information in your post is a goodness, so that in the future other readers can compare your notes with theirs and pastebin's posts are likely to disappear.
+Se a saída resultante é super longo, por favor, colá-lo para https://pastebin.com/ e incluir um link para o seu colar, mas só se for centenas e centenas de linhas de saída - caso contrário a postar todas as informações em seu post é uma bondade, para que, no futuro, outros leitores podem comparar suas notas com a deles e posts pastebin são susceptíveis de desaparecer.
 
 
 
-## Do's and Don'ts
+## e Don'ts
 
-* Please do not send screenshots with stack traceback/error messages - we can't copy-n-paste from the images, instead paste them verbatim into your post.
+* Por favor não envie imagens com mensagens traceback / erro de pilha - não podemos copiar-n-paste das imagens, em vez colá-los na íntegra em seu post.
 
-* Code and traceback in the posts should be `code`-formatted. If you don't know markdown, you can select the snippet you want to make `code`-formatted and then hit the code button in the markdown GUI menu of the post. When you do that it will use fixed size monospaced font which makes it much easier to read.
+* Código e rastreamento nas mensagens devem ser `code`-formatado. Se você não sabe remarcação, você pode selecionar o trecho que você quer fazer `code`-formatado e, em seguida, apertar o botão de código no menu de remarcação GUI do post. Quando você faz isso, ele usará tamanho fixo fonte monoespaçada o que torna muito mais fácil de ler.
 
-* If your system is configured to use a non-English locale, and your error message includes non-English outcome, if possible, re-run the problematic code after running:
+* Se o seu sistema está configurado para usar uma localidade não-Inglês, e sua mensagem de erro inclui resultado não-Inglês, se possível, voltar a executar o código problemático após a execução:
 
-   `export LC_ALL=en_US.UTF-8`
+   `Exportação LC_ALL = en_US.UTF-8`
 
-    So that the error messages will be in English. You can run `locale` to see which locales you have installed.
+    De modo que as mensagens de erro será em Inglês. Você pode executar `locale` para ver quais locales você instalou.
 
 
 
 ## PRs
 
-If you found a bug and know how to fix it, please, submit a PR with the fix [here](https://github.com/fastai/fastai/pulls).
+Se você encontrou um bug e saber como corrigi-lo, por favor, enviar um PR com a correção [here](https://github.com/fastai/fastai/pulls).
 
-If you'd like to contribute a new feature, please, discuss it on the [forums](https://forums.fast.ai/) first.
+Se você gostaria de contribuir com um novo recurso, por favor, discuti-lo na [forums](https://forums.fast.ai/) primeiro.
 
-Make sure to read [CONTRIBUTING](https://github.com/fastai/fastai/blob/master/CONTRIBUTING.md).
+Certifique-se ler [CONTRIBUTING](https://github.com/fastai/fastai/blob/master/CONTRIBUTING.md).
 
-Thank you.
+Obrigado.

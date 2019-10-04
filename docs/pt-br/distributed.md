@@ -1,75 +1,75 @@
 ---
-title: How to launch a distributed training
+Título: Como iniciar um treinamento distribuídos
 ---
 
-If you have multiple GPUs, the most reliable way to use all of them for training is to use the distributed package from pytorch. To help you, there is a distributed module in fastai that has helper functions to make it really easy.
+Se você tiver várias GPUs, a maneira mais confiável para usar todos eles para o treinamento é usar o pacote distribuído a partir de pytorch. Para ajudá-lo, há um módulo distribuídos em fastai que tem funções auxiliares para torná-lo realmente fácil.
 
-## Prepare your script
+## Prepare o seu script
 
-Distributed training doesn't work in a notebook, so first, clean up your experiments notebook and prepare a script to run the training. For instance, here is a minimal script that trains a wide resnet on CIFAR10.
+formação distribuída não funciona em um notebook, então primeiro, limpar seu experimentos notebook e preparar um script para executar o treinamento. Por exemplo, aqui é um script mínimo que treina uma ampla ResNet em CIFAR10.
 
-``` python
-from fastai.vision import *
-from fastai.vision.models.wrn import wrn_22
+`` `Pitão
+de fastai.vision import *
+de wrn_22 importação fastai.vision.models.wrn
 
-path = untar_data(URLs.CIFAR)
-ds_tfms = ([*rand_pad(4, 32), flip_lr(p=0.5)], [])
-data = ImageDataBunch.from_folder(path, valid='test', ds_tfms=ds_tfms, bs=128).normalize(cifar_stats)
-learn = Learner(data, wrn_22(), metrics=accuracy)
-learn.fit_one_cycle(10, 3e-3, wd=0.4, div_factor=10, pct_start=0.5)
-```
+caminho = untar_data (URLs.CIFAR)
+ds_tfms = ([*rand_pad(4, 32), flip_lr (p = 0,5)], [])
+Dados = ImageDataBunch.from_folder (caminho, = válidos 'teste', ds_tfms = ds_tfms, bs = 128) .normalize (cifar_stats)
+aprender = Learner (dados, wrn_22 (), métricas = precisão)
+learn.fit_one_cycle (10, 3e-3, wd = 0,4, div_factor = 10, pct_start = 0,5)
+python ```
 
 ## Add the distributed initialization
 
 Your script is going to be executed in a different process that will each happen on a different GPU. To make this work properly, add the following introduction between your imports and the rest of your code.
 
-``` python
-from fastai.distributed import *
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument("--local_rank", type=int)
-args = parser.parse_args()
-torch.cuda.set_device(args.local_rank)
-torch.distributed.init_process_group(backend='nccl', init_method='env://')
 ```
+de fastai.distributed import *
+argparse importação
+analisador = argparse.ArgumentParser ()
+parser.add_argument ( "- local_rank", type = int)
+args = parser.parse_args ()
+torch.cuda.set_device (args.local_rank)
+torch.distributed.init_process_group (backend = 'nccl', init_method = 'env: //')
+python ```
 
 What we do here is that we import the necessary stuff from fastai (for later), we create an argument parser that will intercept an argument named `local_rank` (which will contain the name of the GPU to use), then we set our GPU accordingly. The last line is what pytorch needs to set things up properly and know that this process is part of a larger group.
 
 ## Make your learner distributed
 
 You then have to add one thing to your learner before fitting it to tell it it's going to execute a distributed training:
-``` python
-learn = learn.to_distributed(args.local_rank)
 ```
+aprender = learn.to_distributed (args.local_rank)
+python ```
 This will add the additional callbacks that will make sure your model and your data loaders are properly setups.
 
 Now you can save your scriptn here is what the full example looks like:
 
-``` python
-from fastai.vision import *
-from fastai.vision.models.wrn import wrn_22
-from fastai.distributed import *
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument("--local_rank", type=int)
-args = parser.parse_args()
-torch.cuda.set_device(args.local_rank)
-torch.distributed.init_process_group(backend='nccl', init_method='env://')
+```
+de fastai.vision import *
+de wrn_22 importação fastai.vision.models.wrn
+de fastai.distributed import *
+argparse importação
+analisador = argparse.ArgumentParser ()
+parser.add_argument ( "- local_rank", type = int)
+args = parser.parse_args ()
+torch.cuda.set_device (args.local_rank)
+torch.distributed.init_process_group (backend = 'nccl', init_method = 'env: //')
 
-path = untar_data(URLs.CIFAR)
-ds_tfms = ([*rand_pad(4, 32), flip_lr(p=0.5)], [])
-data = ImageDataBunch.from_folder(path, valid='test', ds_tfms=ds_tfms, bs=128).normalize(cifar_stats)
-learn = Learner(data, wrn_22(), metrics=accuracy).to_distributed(args.local_rank)
-learn.fit_one_cycle(10, 3e-3, wd=0.4, div_factor=10, pct_start=0.5)
+caminho = untar_data (URLs.CIFAR)
+ds_tfms = ([*rand_pad(4, 32), flip_lr (p = 0,5)], [])
+Dados = ImageDataBunch.from_folder (caminho, = válidos 'teste', ds_tfms = ds_tfms, bs = 128) .normalize (cifar_stats)
+aprender = Learner (dados, wrn_22 (), métricas = precisão) .to_distributed (args.local_rank)
+learn.fit_one_cycle (10, 3e-3, wd = 0,4, div_factor = 10, pct_start = 0,5)
 ```
 
 ## Launch your training
 
 In your terminal, type the following line (adapt `num_gpus` and `script_name` to the number of GPUs you want to use and your script name ending with .py).
 ```
-python -m torch.distributed.launch --nproc_per_node={num_gpus} {script_name}
-```
+python -m torch.distributed.launch --nproc_per_node = {} {num_gpus script_name}
+`` `
 
-What will happen is that the same model will be copied on all your available GPUs. During training, the full dataset will randomly be split between the GPUs (that will change at each epoch). Each GPU will grab a batch (on that fractioned dataset), pass it through the model, compute the loss then back-propagate the gradients. Then they will share their results and average them, which means like your training is the equivalent of a training with a batch size of `batch_size x num_gpus` (where `batch_size` is what you used in your script). 
+O que vai acontecer é que o mesmo modelo será copiado em todos os seus GPUs disponíveis. Durante o treinamento, o conjunto de dados completo será aleatoriamente ser dividido entre as GPUs (que vai mudar em cada época). Cada GPU vai pegar um lote (em que dataset fracionada), passá-lo através do modelo, calcule a perda, em seguida, volta-se propagam os gradientes. Em seguida, eles irão partilhar os seus resultados e média-los, o que significa, como sua formação é o equivalente a uma formação com um tamanho de lote de `batch_size x num_gpus` (onde` batch_size` é o que você usou em seu script).
 
-Since they all have the same gradients at this stage, they will al perform the same update, so the models will still be the same after this step. Then training continues with the next batch, until the number of desired iterations is done.
+Uma vez que todos eles têm os mesmos gradientes nesta fase, eles vão al executar a mesma atualização, de modo que os modelos ainda mais será a mesma após esta etapa. Então formação continua com o próximo lote, até que o número de iterações desejados é feito.

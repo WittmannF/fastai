@@ -1,68 +1,68 @@
 ---
-title: Performance Tips and Tricks
+Título: Dicas de desempenho e Truques
 ---
 
-This document will show you how to speed things up and get more out of your GPU/CPU.
+Este documento irá mostrar-lhe como acelerar as coisas e obter mais fora de sua GPU / CPU.
 
-## Automated Performance Checks
+## Verifica desempenho automatizado
 
-To check your setup for recommended performance improvements, run:
+Para verificar sua configuração para melhorias de desempenho recomendados, execute:
 ```
 python -c "import fastai.utils; fastai.utils.check_perf()"
 ```
 
-## Mixed Precision Training
+## Training Precision Mixed
 
-Combined FP16/FP32 training can tremendously improve training speed and use less GPU RAM. For theory behind it see this [thread](https://forums.fast.ai/t/mixed-precision-training/20720/3)
+Combinada FP16 formação / FP32 tremendamente pode melhorar a velocidade de formação e usar menos memória RAM GPU. Para a teoria por trás dele ver este [thread](https://forums.fast.ai/t/mixed-precision-training/20720/3)
 
-To deploy it see [these instructions](/callbacks.fp16.html).
+Para implantá-lo ver [these instructions](/callbacks.fp16.html).
 
 
 
-## Faster Image Processing
+## Processamento de Imagem Faster
 
-If you notice a bottleneck in JPEG decoding (decompression) it's enough to switch to a much faster [`libjpeg-turbo`](#libjpeg-turbo), using the normal version of `Pillow`.
+Se você notar um gargalo em JPEG decodificação (descompressão) é o suficiente para mudar para um [`libjpeg-turbo`](#libjpeg-turbo) muito mais rápido, usando a versão normal do `Pillow`.
 
-If you need faster image resize, blur, alpha composition, alpha premultiplication, division by alpha, grayscale and other image manipulations you need to switch to [`Pillow-SIMD`](#pillow-simd).
+Se você precisar de redimensionamento mais rápida imagem, borrão, composição alfa, premultiplication, divisão por alfa, tons de cinza e outras manipulações de imagem que você precisa para mudar para [`Pillow-SIMD`](#pillow-simd).
 
-At the moment this section is only relevant if you're on the x86 platform.
+No momento em que esta secção só é relevante se você estiver na plataforma x86.
 
 ### libjpeg-turbo
 
-This is a faster compression/decompression `libjpeg` drop-in replacement.
+Esta é uma mais rápida compressão / descompressão `libjpeg` substituto.
 
-[`libjpeg-turbo`](https://libjpeg-turbo.org/) is a JPEG image codec that uses SIMD instructions (MMX, SSE2, AVX2, NEON, AltiVec). On x86 platforms it accelerates baseline JPEG compression and decompression and progressive JPEG compression. `libjpeg-turbo` is generally 2-6x as fast as `libjpeg`, all else being equal.
+[`libjpeg-turbo`](https://libjpeg-turbo.org/) é um codec de imagem JPEG que utiliza instruções SIMD (MMX, SSE2, AVX2, néon, AltiVec). Em plataformas x86 acelera compressão JPEG de linha de base e descompressão e compressão JPEG progressivo. `Libjpeg-turbo` é geralmente 2-6x tão rápido quanto` libjpeg`, tudo o resto é igual.
 
-When you install it system-wide it provides a drop-in replacement for the `libjpeg` library. Some packages that rely on this library will be able to start using it right away, most will need to be recompiled against the replacement library.
+Quando você o instala todo o sistema que fornece uma substituição drop-in para o `biblioteca libjpeg`. Alguns pacotes que dependem desta biblioteca serão capazes de começar a usá-lo imediatamente, a maioria terá de ser recompilados contra a biblioteca de substituição.
 
-Here is its [git-repo](https://github.com/libjpeg-turbo/libjpeg-turbo).
+Aqui é o seu [git-repo](https://github.com/libjpeg-turbo/libjpeg-turbo).
 
-`fastai` uses `Pillow` for its image processing and you have to rebuild `Pillow` to take advantage of `libjpeg-turbo`.
+`Fastai` usa` Pillow` por sua processamento de imagem e você tem que reconstruir `Pillow` para aproveitar` libjpeg-turbo`.
 
-To learn how to rebuild `Pillow-SIMD` or `Pillow` with `libjpeg-turbo` see the [`Pillow-SIMD`](#pillow-simd) entry.
+Para saber como reconstruir `Pillow-SIMD` ou` Pillow` com `libjpeg-turbo` ver a entrada [`Pillow-SIMD`](#pillow-simd).
 
 
-### Pillow-SIMD
+### Almofada-SIMD
 
-There is a faster `Pillow` version out there.
+Há um mais rápido `versão Pillow` lá fora.
 
-#### Background
+#### Fundo
 
-First, there was PIL (Python Image Library). And then its development was abandoned.
+Primeiro, houve PIL (Python Image Library). E então o seu desenvolvimento foi abandonado.
 
-Then, [Pillow](https://github.com/python-pillow/Pillow/) forked PIL as a drop-in replacement and according to its [benchmarks](https://python-pillow.org/pillow-perf/) it is significantly faster than `ImageMagick`, `OpenCV`, `IPP` and other fast image processing libraries (on identical hardware/platform).
+Em seguida, [Pillow](https://github.com/python-pillow/Pillow/) bifurcada PIL como um substituto e de acordo com a sua [benchmarks](https://python-pillow.org/pillow-perf/) é significativamente mais rápido do que `ImageMagick`,` OpenCV`, `IPP` e outras bibliotecas de processamento de imagem rápido (em hardware / plataforma idêntica).
 
-Relatively recently, [Pillow-SIMD](https://github.com/uploadcare/pillow-simd) was born to be a drop-in replacement for Pillow. This library in its turn is 4-6 times faster than Pillow, according to the same [benchmarks](https://python-pillow.org/pillow-perf/). `Pillow-SIMD` is highly optimized for common image manipulation instructions using Single Instruction, Multiple Data ([SIMD](https://en.wikipedia.org/wiki/SIMD) approach, where multiple data points are processed simultaneously. This is not parallel processing (think threads), but a single instruction processing, supported by CPU, via [data-level parallelism](https://en.wikipedia.org/wiki/Data_parallelism), similar to matrix operations on GPU, which also use SIMD.
+Há relativamente pouco tempo, [Pillow-SIMD](https://github.com/uploadcare/pillow-simd) nasceu para ser um substituto drop-in para descanso. Esta biblioteca por sua vez, é de 4-6 vezes mais rápido do que descanso, de acordo com o mesmo [benchmarks](https://python-pillow.org/pillow-perf/). `Pillow-SIMD` é altamente otimizado para instruções de manipulação de imagem comuns usando Single Instruction, Multiple Data (abordagem [SIMD](https://en.wikipedia.org/wiki/SIMD), onde vários pontos de dados são processados ​​simultaneamente. Este não é o processamento paralelo (pense threads), mas um único processamento instrução, apoiado por CPU , através [data-level parallelism](https://en.wikipedia.org/wiki/Data_parallelism), semelhante a operações de matriz sobre GPU, que também utilizam SIMD.
 
-`Pillow-SIMD` currently works only on the x86 platform. That's the main reason it's a fork of Pillow and not backported to `Pillow` - the latter is committed to support many other platforms/architectures where SIMD-support is lacking. The `Pillow-SIMD` release cycle is made so that its versions are identical Pillow's and the functionality is identical, except `Pillow-SIMD` speeds up some of them (e.g. resize).
+`Pillow-SIMD` atualmente funciona apenas na plataforma x86. Essa é a principal razão que é um fork do travesseiro e não portadas para `Pillow` - este último está empenhada em apoiar muitas outras plataformas / arquiteturas onde SIMD-support está faltando. A `ciclo libertação Almofada-SIMD` é feita de modo que as suas versões são idênticas Almofada de e a funcionalidade é idêntico, excepto` Almofada-SIMD` acelera a alguns deles (por exemplo redimensionamento).
 
-#### Installation
+#### Instalação
 
-This section explains how to install `Pillow-SIMD` w/ `libjpeg-turbo` (but the very tricky `libjpeg-turbo` part of it is identically relevant to `Pillow` - just replace `pillow-simd` with `pillow` in the code below).
+Esta seção explica como instalar o `Pillow-SIMD` w /` libjpeg-turbo` (mas o `parte muito complicada libjpeg-turbo` dele é idêntica relevantes para` Pillow` - basta substituir `pillow-simd` com` pillow` no código abaixo).
 
-Here is the tl;dr version to install `Pillow-SIMD` w/ `libjpeg-turbo` and w/o `TIFF` support:
+Aqui está o tl; dr versão para instalar `Pillow-SIMD` w /` libjpeg-turbo` e w / o `apoio TIFF`:
 
-   ```
+   ```
    conda uninstall -y --force pillow pil jpeg libtiff libjpeg-turbo
    pip   uninstall -y         pillow pil jpeg libtiff libjpeg-turbo
    conda install -yc conda-forge libjpeg-turbo
@@ -134,7 +134,7 @@ Here are the detailed instructions, with an optional `TIFF` support:
 #### How to check whether you're running `Pillow` or `Pillow-SIMD`?
 
 ```
-python -c "from PIL import Image; print(Image.PILLOW_VERSION)"
+python -c "do PIL importação de imagem; print (Image.PILLOW_VERSION)"
 3.2.0.post3
 ```
 According to the author, if `PILLOW_VERSION` has a postfix, it is `Pillow-SIMD`. (Assuming that `Pillow` will never make a `.postX` release).
@@ -148,23 +148,23 @@ However, if at a later time something triggers a conda or pip update on `Pillow`
 Here is how you can see that the `PIL` library is dynamically linked to `libjpeg.so`:
 
 ```
-cd ~/anaconda3/envs/fastai/lib/python3.6/site-packages/PIL/
-ldd  _imaging.cpython-36m-x86_64-linux-gnu.so | grep libjpeg
-        libjpeg.so.8 => ~/anaconda3/envs/fastai/lib/libjpeg.so.8
+cd ~ / anaconda3 / envs / fastai / lib / python3.6 / site-packages / PIL /
+ldd _imaging.cpython-36m-x86_64-linux-gnu.so | grep libjpeg
+        libjpeg.so.8 => ~ / anaconda3 / envs / fastai / lib / libjpeg.so.8
 ```
 
 and `~/anaconda3/envs/fastai/lib/libjpeg.so.8` was installed by `conda install -c conda-forge libjpeg-turbo`. We know that from:
 
 ```
-cd  ~/anaconda3/envs/fastai/conda-meta/
+cd ~ / anaconda3 / envs / fastai / Conda-meta /
 grep libjpeg.so libjpeg-turbo-2.0.1-h470a237_0.json
 ```
 
 If I now install the normal `libjpeg` and do the same check on the `jpeg`'s package info:
 
 ```
-conda install jpeg
-cd  ~/anaconda3/envs/fastai/conda-meta/
+Conda instalar jpeg
+cd ~ / anaconda3 / envs / fastai / Conda-meta /
 grep libjpeg.so jpeg-9b-h024ee3a_2.json
 
 ```
@@ -178,23 +178,23 @@ You need `Pillow>=5.4.0` to accomplish the following (install from github until 
 `pip install git+https://github.com/python-pillow/Pillow`).
 
 ```
-python -c "from PIL import features; print(features.check_feature('libjpeg_turbo'))"
-True
+python -c "de recursos PIL importação; print (features.check_feature ( 'libjpeg_turbo'))"
+Verdadeiro
 ```
 
 And a version-proof check:
 
 ```
-from PIL import features, Image
-from packaging import version
+de recursos de importação PIL, Imagem
+a partir da versão importação de embalagens
 
-if version.parse(Image.PILLOW_VERSION) >= version.parse("5.4.0"):
-    if features.check_feature('libjpeg_turbo'):
-        print("libjpeg-turbo is on")
-    else:
-        print("libjpeg-turbo is not on")
-else:
-    print(f"libjpeg-turbo' status can't be derived - need Pillow(-SIMD)? >= 5.4.0 to tell, current version {Image.PILLOW_VERSION}")
+se version.parse (Image.PILLOW_VERSION)> = version.parse ( "5.4.0"):
+    se features.check_feature ( 'libjpeg_turbo'):
+        print ( "libjpeg-turbo é sobre")
+    outro:
+        print ( "libjpeg-turbo não é sobre")
+outro:
+    print (f "estado libjpeg-turbo' não pode ser derivada - necessidade Pillow (-SIMD)> = 5.4.0 para contar, versão atual {Image.PILLOW_VERSION}?")
 ```
 
 ### Conda packages
@@ -203,24 +203,24 @@ The `fastai` conda (test) channel has an experimental `pillow` package built aga
 
 To install:
 ```
-conda uninstall -y --force pillow libjpeg-turbo
-conda install -c fastai/label/test pillow
+Conda desinstalar -y --force travesseiro libjpeg-turbo
+Conda instalar / label travesseiro -c fastai / test
 ```
 
 There is also an experimental `pillow-simd-5.3.0.post0` conda package built against `libjpeg-turbo` and compiled with `avx2`. Try it only for python 3.6 on linux.
 ```
-conda uninstall -y --force pillow libjpeg-turbo
-conda install -c fastai/label/test pillow-simd
-```
+Conda desinstalar -y --force travesseiro libjpeg-turbo
+Conda instalar -c fastai / label / test pillow-SIMD
+`` `
 
-It probably won't work on your setup unless its CPU has the same capability as the one it was built on (Intel). So if it doesn't work, install `pillow-simd` from [source](https://github.com/uploadcare/pillow-simd#installation) instead.
+Ele provavelmente não vai trabalhar em sua configuração a menos que seu CPU tem a mesma capacidade como aquele que foi construído em (Intel). Então, se ele não funcionar, instale `pillow-simd` de [Building from source](https://pillow.readthedocs.io/en/latest/installation.html#building-from-source) vez.
 
-Note that `pillow-simd` will get overwritten by `pillow` through update/install of any other package depending on `pillow`. You can fool `pillow-simd` into believing it is `pillow` and then it'll not get wiped out. You will have to [make a local build for that](https://github.com/fastai/fastai/blob/master/builds/custom-conda-builds/pillow-simd/conda-build.txt).
+Note que `pillow-simd` vai ser substituído por` pillow` através de atualização / instalação de qualquer outro pacote dependendo `pillow`. Você pode enganar `pillow-simd` em acreditar que é` pillow` e então não vai ter dizimado. Você terá que [source](https://github.com/uploadcare/pillow-simd#installation).
 
-If you have problems with these experimental packages please post [here](https://forums.fast.ai/t/performance-improvement-through-faster-software-components/32628/1), including the output of `python -m fastai.utils.check_perf` and `python -m fastai.utils.show_install` and the exact problem/errors you encountered.
+Se você tiver problemas com estes pacotes experimentais por favor poste [make a local build for that](https://github.com/fastai/fastai/blob/master/builds/custom-conda-builds/pillow-simd/conda-build.txt), incluindo a saída do `python -m fastai.utils.check_perf` e` python -m fastai.utils.show_install` e as exatas problemas / erros encontrados.
 
 
 
-## GPU Performance
+## Desempenho GPU
 
-See [GPU Memory Notes](/dev/gpu.html#gpu-memory-notes).
+Veja [here](https://forums.fast.ai/t/performance-improvement-through-faster-software-components/32628/1).

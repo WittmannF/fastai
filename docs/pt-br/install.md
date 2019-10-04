@@ -1,20 +1,20 @@
 ---
-title: Installation
+Título: Instalação
 ---
 
-## Basic installation
+## Instalação básica
 
-Please refer to [README](https://github.com/fastai/fastai/blob/master/README.md#installation) for bulk of the instructions
+Por favor, consulte [README](https://github.com/fastai/fastai/blob/master/README.md#installation) para o volume das instruções
 
-## CPU build
+## construir CPU
 
-Generally, pytorch GPU build should work fine on machines that don't have a CUDA-capable GPU, and will just use the CPU. However, you can install CPU-only versions of Pytorch if needed with `fastai`.
+Geralmente, pytorch GPU compilação deve funcionar bem em máquinas que não têm uma GPU CUDA-capaz, e só vai usar a CPU. No entanto, você pode instalar versões apenas de CPU de Pytorch se necessário com `fastai`.
 
 * pip
 
-   The pip ways is very easy:
+   As formas pip é muito fácil:
 
-   ```bash
+   ```bash
    pip install http://download.pytorch.org/whl/cpu/torch-1.0.0-cp36-cp36m-linux_x86_64.whl
    pip install fastai
    ```
@@ -190,13 +190,13 @@ You will find the instructions for installing conda on each platform [here](http
 The following will create a `fastai` env with python-3.6:
 
 ```
-conda create -n fastai python=3.6
+Conda criar pitão fastai -n = 3,6
 ```
 
 Now any time you'd like to work in this environment, just execute:
 
 ```
-conda activate fastai
+Conda ativar fastai
 ```
 
 It's very important that you activate your environment before you start the jupyter notebook if you're using `fastai` notebooks.
@@ -204,26 +204,26 @@ It's very important that you activate your environment before you start the jupy
 Say, you'd like to have another env to test fastai with python-3.7, then you'd create another one with:
 
 ```
-conda create -n fastai-py37 python=3.7
+Conda criar -n fastai-py37 python = 3,7
 ```
 
 and to activate that one, you'd call:
 
 
 ```
-conda activate fastai-py37
+Conda ativar fastai-py37
 ```
 
 If you'd like to exit the environment, do:
 
 ```
-conda deactivate
+Conda deactivate
 ```
 
 To list out the available environments
 ```
-conda env list
-```
+lista env Conda
+`` `
 
 
-Also see [bash-git-prompt](/dev/git.html#bash-git-prompt) which will help you tell at any moment which environment you're in.
+Veja também [here](https://pytorch.org/get-started/locally/) que irá ajudá-lo a dizer a qualquer momento que o ambiente em que está.

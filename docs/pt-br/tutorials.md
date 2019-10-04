@@ -1,13 +1,13 @@
 ---
-title: Tutorials Overview
+Título: Tutoriais Overview
 ---
 
-## Currently available tutorials
+## tutoriais disponíveis atualmente
 
-* [Look at data](/tutorial.data.html) - This is a beginner's tutorial, that explains how to quickly look at your data or model predictions.
+* [Look at data](/tutorial.data.html) - Este é um tutorial iniciante, que explica como rapidamente olhar para seus dados ou previsões do modelo.
 
-* [Inference Learner](/tutorial.inference.html) - This is an intermediate tutorial, that explains how to create a `Learner` for inference.
+* [Inference Learner](/tutorial.inference.html) - Este é um tutorial intermediário, que explica como criar um `Learner` por inferência.
 
-* [Custom ItemList](/tutorial.itemlist.html) - This is an advanced tutorial, that explains how to create your custom subclasses of `ItemBase` or `ItemList`.
+* [Custom ItemList](/tutorial.itemlist.html) - Este é um tutorial avançado, que explica como criar suas subclasses personalizadas de `ItemBase` ou` ItemList`.
 
-* [Deep Learning on a Shoestring](/tutorial.resources.html) - This tutorial will teach you how to make a little GPU RAM to go a long way, and avoid the need to restart the notebook kernel all the time.
+* [Deep Learning on a Shoestring](/tutorial.resources.html) - Este tutorial vai te ensinar como fazer um pouco de RAM GPU para percorrer um longo caminho, e evitar a necessidade de reiniciar o kernel notebook o tempo todo.
