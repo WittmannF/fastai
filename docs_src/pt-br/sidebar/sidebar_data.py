@@ -7,22 +7,22 @@
 # This dict defines the structure:
 
 sidebar_d = {
-    'Getting started': {
-        'Installation': 'https://github.com/fastai/fastai/blob/master/README.md#installation',
-        'Installation Extras': '/install',
-        'Troubleshooting': '/troubleshoot',
+    'Primeiros passos': {
+        'Instalação': 'https://github.com/fastai/fastai/blob/master/README.md#installation',
+        'Instalações adicionais': '/install',
+        'Solução de problemas': '/troubleshoot',
         'Performance': '/performance',
-        'Support': '/support'
+        'Suporte': '/support'
     },
-    'Training': {
-        'Overview': '/training',
+    'Treinamento': {
+        'Visão Geral': '/training',
         'basic_train': '/basic_train',
         'train': '/train',
         'metrics': '/metrics',
         'callback': '/callback',
         '': {
             'callbacks': {
-                'Overview': '/callbacks',
+                'Visão Geral': '/callbacks',
                 'HookCallback': '/callbacks.hooks',
                 'MixedPrecision': '/callbacks.fp16',
                 'OneCycleScheduler': '/callbacks.one_cycle',
@@ -38,11 +38,11 @@ sidebar_d = {
             }
         },
     },
-    'Applications': {
-        'Overview': '/applications',
+    'Applicações': {
+        'Visão Geral': '/applications',
         '': {
             'vision': {
-                'Overview': '/vision',
+                'Visão Geral': '/vision',
                 'vision.learner': '/vision.learner',
                 'vision.interpret': '/vision.interpret',
                 'vision.transform': '/vision.transform',
@@ -55,7 +55,7 @@ sidebar_d = {
         },
         'empty1': {
             'text': {
-                'Overview': '/text',
+                'Visão Geral': '/text',
                 'text.learner': '/text.learner',
                 'text.interpret': '/text.interpret',
                 'text.transform': '/text.transform',
@@ -80,7 +80,7 @@ sidebar_d = {
         'collab': '/collab',
     },
     'Core': {
-        'Overview': '/overview',
+        'Visão Geral': '/overview',
         'data_block': '/data_block',
         'basic_data': '/basic_data',
         'layers': '/layers',
@@ -95,8 +95,8 @@ sidebar_d = {
         'ipython helpers': '/utils.ipython',
         'Display utils': '/utils.mod_display',
     },
-    'Tutorials': {
-        'Overview': '/tutorials',
+    'Tutoriais': {
+        'Visão Geral': '/tutorials',
         'Look at data': '/tutorial.data',
         'Inference Learner': '/tutorial.inference',
         'Custom ItemList': '/tutorial.itemlist',
